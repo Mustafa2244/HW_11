@@ -47,20 +47,13 @@ class Birthday(Field):
 
 
 class Record:
-    def __init__(self, name: Name, phones=None, birthday=None):
+    def __init__(self, name: Name, phones: list[Phone] = [], birthday=None):
         self.name = name
         self.birthday = birthday
-        self.phones = []
-        if phones:
-            if type(phones) == list:
-                for phone in phones:
-                    if phone.get_value():
-                        self.phones.append(phone)
-            else:
-                self.phones.append(phones)
+        self.phones = phones
 
-    def add_phone(self, phone):
-        self.phones.append(Phone(phone))
+    def add_phone(self, phone: Phone):
+        self.phones.append(phone)
 
     def remove_phone(self, phone):
         for my_phone in self.phones:
@@ -101,9 +94,6 @@ class Record:
 
 
 class AddressBook(UserDict):
-    def __setitem__(self, key, value):
-        super().__setitem__(key, value)
-
     def add_record(self, record: Record):
         self.data[record.name.get_value()] = record
 
